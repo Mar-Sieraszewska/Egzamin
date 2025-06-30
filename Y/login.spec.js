@@ -1,20 +1,17 @@
 // @ts-check
-import { test, expect } from '@playwright/test';
+import { test, expect } from '@playwright/test'
+import { Gdpr } from '../pages/gdpr.js';
+import { Login } from '../pages/login.js';
 
-test('has title', async ({ page }) => {
-  await page.goto('');
+test('zaloguj się', async ({ page }) => {
+ const gdpr = new Gdpr(page);
+ const login = new Login(page);
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle('Automation Exercise');
-  await expect(page.getByRole('heading', { name: 'Full-Fledged practice website' })).toBeVisible();
-});
+    await page.goto(login.url);
+    await gdpr.acceptGdpr();
+    await login.logInWithCredentials('dawake9293@decodewp.com', 'Martyna123@');
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+   
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+    await expect(page.locator('text=Logged in as Martyna')).toBeVisible();
 });
