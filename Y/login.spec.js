@@ -9,9 +9,9 @@ test('zaloguj się', async ({ page }) => {
 
     await page.goto(login.url);
     await gdpr.acceptGdpr();
-    await login.logInWithCredentials('dawake9293@decodewp.com', 'Martyna123@');
+    await login.logInWithCredentials(process.env.EMAIL, process.env.PASSWORD);
 
    
 
-    await expect(page.locator('text=Logged in as Martyna')).toBeVisible();
+    await expect(page.locator('text=Logged in as ${process.env.TESTUSER}')).toBeVisible();
 });
